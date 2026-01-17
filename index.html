@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Paws Shelter</title>
+    <link rel="website icon" href="pawprint.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <img src="pawprint.png" alt="Paw Print" class="logo">
+        </div>
+
+        <div class="nav-links">
+            <a href="#about">About Us</a>
+            <a href="#pets">Our Pets</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <div class="nav-button">
+            <button class="login-btn">Login</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-text">
+            <div class="hero-badge">
+                <img src="heart.png" alt="Heart" class="heart-img">
+                <span class="badge-text">Find Your Forever Friend</span>
+            </div>
+
+            <h1>Every Pet Deserves a Loving Home</h1>
+            <p>Open your heart and home to a shelter pet. Our furry friends are waiting to fill your life with
+                unconditional love and joy.</p>
+
+            <div class="hero-buttons">
+                <button class="hero-btn">Meet Our Pets</button>
+                <button class="hero-btn hero-btn-outline">How to Adopt</button>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat">
+                    <h2>350+</h2>
+                    <p>Pets Adopted</p>
+                </div>
+                <div class="stat">
+                    <h2>10</h2>
+                    <p>Years of Service</p>
+                </div>
+                <div class="stat">
+                    <h2>120</h2>
+                    <p>Pets Waiting</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desna polovica: slideshow slika -->
+        <div class="hero-image">
+            <img src="cat&dog.jpg" alt="Happy pets" class="slide active">
+            <img src="cat.jpg" alt="Happy pets" class="slide">
+            <img src="dog1.jfif" alt="Happy pets" class="slide">
+            <img src="dogs.png" alt="Happy pets" class="slide">
+            <img src="bunny.jpg" alt="Happy pets" class="slide">
+            <img src="hedgehog.jpg" alt="Happy pets" class="slide">
+        </div>
+    </section>
+
+
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Our Shelter</h2>
+        <p>
+            Happy Paws Shelter is a non-profit organization dedicated to rescuing
+            abandoned and homeless animals. Our mission is to provide love, care,
+            and a safe home until every pet finds a family.
+        </p>
+    </section>
+
+    <!-- Pets Section -->
+    <section id="pets">
+        <h2>Our Pets</h2>
+
+        <div class="pet-container">
+            <div class="pet-card">
+                <img src="dogs.png" alt="Dog">
+                <h3>Buddy</h3>
+                <p>Friendly dog, 1 years old</p>
+            </div>
+
+            <div class="pet-card">
+                <img src="cat.jpg" alt="Cat">
+                <h3>Luna</h3>
+                <p>Calm cat, 1 month old</p>
+            </div>
+
+            <div class="pet-card">
+                <img src="dog1.jfif" alt="Dog">
+                <h3>Max</h3>
+                <p>Playful puppy, 1 year old</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Adopt Section -->
+    <section id="adopt">
+        <h2>How to Adopt</h2>
+        <ol>
+            <li>Visit our shelter</li>
+            <li>Meet your future pet</li>
+            <li>Fill out an adoption form</li>
+            <li>Give a pet a forever home ❤️</li>
+        </ol>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Email: happypaws@gmail.com</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Happy Paws Shelter</p>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = 'rgba(255,255,255,0.5)'; // pozadina poluprozirna
+                navbar.style.opacity = '1'; // tekst i gumb ostaju čitljivi
+            } else {
+                navbar.style.backgroundColor = 'rgba(255,255,255,0.9)';
+                navbar.style.opacity = '1';
+            }
+        });
+
+
+        // Slideshow i scroll opacity script
+        const slides = document.querySelectorAll('.hero-image .slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) slide.classList.add('active');
+            });
+        }
+
+        showSlide(currentSlide);
+
+        let slideInterval = setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }, 3000);
+
+        // Klikom na sliku prelazak na sljedeću
+        slides.forEach(slide => {
+            slide.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+                slideInterval = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    showSlide(currentSlide);
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+
+</html>
