@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Paws Shelter</title>
-    <link rel="website icon" href="pawprint.png">
+    <link rel="website icon" href="picture/pawprint.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,7 +14,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-logo">
-            <img src="pawprint.png" alt="Paw Print" class="logo">
+            <img src="picture/pawprint.png" alt="Paw Print" class="logo">
         </div>
 
         <div class="nav-links">
@@ -32,7 +32,7 @@
     <section class="hero">
         <div class="hero-text">
             <div class="hero-badge">
-                <img src="heart.png" alt="Heart" class="heart-img">
+                <img src="picture/heart.png" alt="Heart" class="heart-img">
                 <span class="badge-text">Find Your Forever Friend</span>
             </div>
 
@@ -63,12 +63,12 @@
 
         <!-- Desna polovica: slideshow slika -->
         <div class="hero-image">
-            <img src="cat&dog.jpg" alt="Happy pets" class="slide active">
-            <img src="cat.jpg" alt="Happy pets" class="slide">
-            <img src="dog1.jfif" alt="Happy pets" class="slide">
-            <img src="dogs.png" alt="Happy pets" class="slide">
-            <img src="bunny.jpg" alt="Happy pets" class="slide">
-            <img src="hedgehog.jpg" alt="Happy pets" class="slide">
+            <img src="picture/cat&dog.jpg" alt="Happy pets" class="slide active">
+            <img src="picture/cat.jpg" alt="Happy pets" class="slide">
+            <img src="picture/dog1.jfif" alt="Happy pets" class="slide">
+            <img src="picture/dogs.png" alt="Happy pets" class="slide">
+            <img src="picture/bunny.jpg" alt="Happy pets" class="slide">
+            <img src="picture/hedgehog.jpg" alt="Happy pets" class="slide">
         </div>
     </section>
 
@@ -90,19 +90,19 @@
 
         <div class="pet-container">
             <div class="pet-card">
-                <img src="dogs.png" alt="Dog">
+                <img src="picture/dogs.png" alt="Dog">
                 <h3>Buddy</h3>
                 <p>Friendly dog, 1 years old</p>
             </div>
 
             <div class="pet-card">
-                <img src="cat.jpg" alt="Cat">
+                <img src="picture/cat.jpg" alt="Cat">
                 <h3>Luna</h3>
                 <p>Calm cat, 1 month old</p>
             </div>
 
             <div class="pet-card">
-                <img src="dog1.jfif" alt="Dog">
+                <img src="picture/dog1.jfif" alt="Dog">
                 <h3>Max</h3>
                 <p>Playful puppy, 1 year old</p>
             </div>
@@ -136,8 +136,8 @@
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                navbar.style.backgroundColor = 'rgba(255,255,255,0.5)'; // pozadina poluprozirna
-                navbar.style.opacity = '1'; // tekst i gumb ostaju čitljivi
+                navbar.style.backgroundColor = 'rgba(255,255,255,0.5)'; 
+                navbar.style.opacity = '1';
             } else {
                 navbar.style.backgroundColor = 'rgba(255,255,255,0.9)';
                 navbar.style.opacity = '1';
@@ -145,7 +145,6 @@
         });
 
 
-        // Slideshow i scroll opacity script
         const slides = document.querySelectorAll('.hero-image .slide');
         let currentSlide = 0;
 
@@ -163,7 +162,7 @@
             showSlide(currentSlide);
         }, 3000);
 
-        // Klikom na sliku prelazak na sljedeću
+       
         slides.forEach(slide => {
             slide.addEventListener('click', () => {
                 clearInterval(slideInterval);
@@ -177,5 +176,6 @@
         });
     </script>
 </body>
+
 
 </html>
