@@ -191,7 +191,6 @@ body {
     z-index: 1;
 }
 
-/* Statistika */
 .hero-stats {
     display: flex;
     gap: 40px;
@@ -408,4 +407,5 @@ footer {
     .nav-links a {
         font-size: 12px;
     }
+
 }
