@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Happy Paws Shelter</title>
+    <link rel="icon" href="../picture/pawprint.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <!-- Lijevi panel - Register form -->
+        <div class="auth-panel register-panel">
+            <div class="auth-header">
+                <img src="../picture/pawprint.png" alt="Logo" class="auth-logo">
+                <h1>Create Account</h1>
+                <p>Join Happy Paws family</p>
+            </div>
+            <form class="auth-form">
+                <div class="input-group">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <div class="input-group">
+                    <input type="tel" placeholder="Phone">
+                </div>
+                <button type="submit" class="auth-btn primary">Create Account</button>
+            </form>
+        </div>
+
+        <!-- Desni panel - poziv na login -->
+        <div class="auth-panel login-call">
+            <h1>Already have account?</h1>
+            <p>Sign in to your account</p>
+            <button class="auth-btn secondary" onclick="goToLogin()">Sign In</button>
+        </div>
+    </div>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
+<script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyBX8BanaMhQyh93JfV5PM9MK7cNwB8EuoI",
+  authDomain: "happypaws-shelter.firebaseapp.com",
+  projectId: "happypaws-shelter",
+  storageBucket: "happypaws-shelter.firebasestorage.app",
+  messagingSenderId: "793183880153",
+  appId: "1:793183880153:web:ed707020b24ffd289acfc8"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+</script>
+<script>
+        function goToLogin() {
+            window.location.href = 'login.html';
+        }
+
+        document.querySelector('.auth-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.querySelector('input[type="email"]').value;
+        const password = document.querySelector('input[type="password"]').value;
+        
+        auth.createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+            const name = document.querySelector('input[placeholder="Full Name"]').value || 'Anonymous';
+            db.collection('users').doc(userCredential.user.uid).set({
+                name, email,
+                joined: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            
+            window.location.href = '../index.html';
+            })
+            .catch((error) => alert('❌ ' + error.message));
+        });
+    </script>
+</body>
+</html>

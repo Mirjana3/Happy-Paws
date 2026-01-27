@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Paws Shelter</title>
+    <link rel="website icon" href="../picture/pawprint.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <img src="../picture/pawprint.png" alt="Paw Print" class="logo">
+        </div>
+
+        <div class="nav-links"></div>
+
+        <div class="nav-button"></div>
+    </nav>
+
+    <!-- My Page Section -->
+    <section id="mypage" style="display:none;">
+        <h2>My Page</h2>
+        <div id="user-welcome"></div>
+        <button onclick="logout()" class="hero-btn">Logout</button>
+    </section>
+
+     <!-- Adopt Section -->
+    <section id="adopt">
+        <h2>How To Adopt</h2>
+        <ol>
+            <li>Visit our shelter</li>
+            <li>Meet your future pet</li>
+            <li>Fill out an adoption form</li>
+            <li>Give a pet a forever home ❤️</li>
+        </ol>
+    </section>
+
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-grid">
+        <div class="contact-item">
+            <h3>📍 Location</h3>
+            <p>Osijek-Baranja County<br>Školska 123, Osijek<br>Croatia 31000</p>
+        </div>
+        <div class="contact-item">
+            <h3>📧 Email</h3>
+            <p>info@happypaws.hr<br>adopt@happypaws.hr</p>
+        </div>
+        <div class="contact-item">
+            <h3>📞 Phone</h3>
+            <p>+385 31 555 123<br>Mon-Sat 10-18h</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Happy Paws Shelter</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+    <script src="../auth-navbar.js"></script>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = 'rgba(255,255,255,0.5)'; 
+                navbar.style.opacity = '1';
+            } else {
+                navbar.style.backgroundColor = 'rgba(255,255,255,0.9)';
+                navbar.style.opacity = '1';
+            }
+        });
+
+
+        const slides = document.querySelectorAll('.hero-image .slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) slide.classList.add('active');
+            });
+        }
+
+        showSlide(currentSlide);
+
+        let slideInterval = setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }, 3000);
+
+       
+        slides.forEach(slide => {
+            slide.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+                slideInterval = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    showSlide(currentSlide);
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>

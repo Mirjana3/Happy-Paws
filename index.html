@@ -8,6 +8,9 @@
     <link rel="website icon" href="picture/pawprint.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js" defer></script>
+    <script src="auth-navbar.js" defer></script>
 </head>
 
 <body>
@@ -17,15 +20,9 @@
             <img src="picture/pawprint.png" alt="Paw Print" class="logo">
         </div>
 
-        <div class="nav-links">
-            <a href="#about">About Us</a>
-            <a href="#pets">Our Pets</a>
-            <a href="#contact">Contact</a>
-        </div>
+        <div class="nav-links"></div>
 
-        <div class="nav-button">
-            <button class="login-btn">Login</button>
-        </div>
+        <div class="nav-button"></div>
     </nav>
 
     <!-- Hero Section -->
@@ -41,8 +38,8 @@
                 unconditional love and joy.</p>
 
             <div class="hero-buttons">
-                <button class="hero-btn">Meet Our Pets</button>
-                <button class="hero-btn hero-btn-outline">How to Adopt</button>
+                <button class="hero-btn" onclick="document.getElementById('pets').scrollIntoView({behavior: 'smooth'})">Meet Our Pets</button>
+                <button class="hero-btn hero-btn-outline" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">How to Adopt</button>
             </div>
 
             <div class="hero-stats">
@@ -62,12 +59,15 @@
         </div>
 
         <div class="hero-image">
-            <img src="picture/cat&dog.jpg" alt="Happy pets" class="slide active">
-            <img src="picture/cat.jpg" alt="Happy pets" class="slide">
-            <img src="picture/dog1.jfif" alt="Happy pets" class="slide">
-            <img src="picture/dogs.png" alt="Happy pets" class="slide">
-            <img src="picture/bunny.jpg" alt="Happy pets" class="slide">
-            <img src="picture/hedgehog.jpg" alt="Happy pets" class="slide">
+            <img src="picture/dog-labrador-small.jpg" alt="Happy pets" class="slide active">
+            <img src="picture/dog-poodle-brown.jpg" alt="Happy pets" class="slide">
+            <img src="picture/cat-persian-large.jpg" alt="Happy pets" class="slide">
+            <img src="picture/cat-siamese-large.jpg" alt="Happy pets" class="slide">
+            <img src="picture/rabbit-large.jpg" alt="Happy pets" class="slide">
+            <img src="picture/rabbit-small.jpg" alt="Happy pets" class="slide">
+            <img src="picture/bird-parakeet-orange.jpg" alt="Happy pets" class="slide">
+            <img src="picture/bird-parakeet-white.jpg" alt="Happy pets" class="slide">
+
         </div>
     </section>
 
@@ -76,41 +76,26 @@
     <!-- About Section -->
     <section id="about">
         <h2>About Our Shelter</h2>
-        <p>
-            Happy Paws Shelter is a non-profit organization dedicated to rescuing
-            abandoned and homeless animals. Our mission is to provide love, care,
-            and a safe home until every pet finds a family.
-        </p>
+            <div class="about-extra">
+                <p>
+                    Happy Paws Shelter is a non-profit organization dedicated to rescuing
+                    abandoned and homeless animals. The mission is to provide love, care,
+                    and a safe home until every pet finds a family.
+                </p>
+                <p>
+                    Our team of 15 volunteers works daily to ensure every animal gets a second chance. We've successfully rehomed over 500 pets with 95% adoption success rate.
+                </p>
+                <div class="about-highlights">
+                    <span>🐾 Medical Care</span>
+                    <span>❤️ Behavioral Training</span>
+                    <span>🏠 Foster Program</span>
+                </div>
+            </div>
     </section>
 
-    <!-- Pets Section -->
-    <section id="pets">
-        <h2>Our Pets</h2>
-
-        <div class="pet-container">
-            <div class="pet-card">
-                <img src="picture/dogs.png" alt="Dog">
-                <h3>Buddy</h3>
-                <p>Friendly dog, 1 years old</p>
-            </div>
-
-            <div class="pet-card">
-                <img src="picture/cat.jpg" alt="Cat">
-                <h3>Luna</h3>
-                <p>Calm cat, 1 month old</p>
-            </div>
-
-            <div class="pet-card">
-                <img src="picture/dog1.jfif" alt="Dog">
-                <h3>Max</h3>
-                <p>Playful puppy, 1 year old</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Adopt Section -->
+     <!-- Adopt Section -->
     <section id="adopt">
-        <h2>How to Adopt</h2>
+        <h2>How To Adopt</h2>
         <ol>
             <li>Visit our shelter</li>
             <li>Meet your future pet</li>
@@ -119,16 +104,89 @@
         </ol>
     </section>
 
+    <!-- Pets Section -->
+    <section id="pets">
+        <h2>Adopt Pets</h2>
+        <p class="pets-subtitle">Ready for their forever homes</p>
+
+        <div class="pet-container">
+            <div class="pet-card">
+                <img src="picture/dog-labrador-small.jpg" alt="Dog">
+                <h3>Buddy</h3>
+                <p>Golden Retriever | 5 months | 15kg</p>
+            </div>
+
+            <div class="pet-card">
+                <img src="picture/dog-poodle-brown.jpg" alt="Cat">
+                <h3>Luna</h3>
+                <p>Poodle | 4 years | 8kg</p>
+            </div>
+
+            <div class="pet-card">
+                <img src="picture/cat-persian-large.jpg" alt="Dog">
+                <h3>Shadow</h3>
+                <p>Persian | 8 years | 9kg</p>
+            </div>
+
+            <div class="pet-card">
+                <img src="picture/cat-siamese-large.jpg" alt="Dog">
+                <h3>Pez</h3>
+                <p>Siamese | 2 years | 6kg</p>
+            </div>
+
+            <div class="pet-card">
+                <img src="picture/rabbit-large.jpg" alt="Dog">
+                <h3>Hop</h3>
+                <p>Rabbit | 3 years | 4kg</p>
+            </div>
+
+            <div class="pet-card">
+                <img src="picture/rabbit-small.jpg" alt="Dog">
+                <h3>Snowy</h3>
+                <p>Rabbit | 4 months | 2kg</p>
+            </div>
+
+            <div class="pet-card">
+                <img src="picture/bird-parakeet-orange.jpg" alt="Dog">
+                <h3>Tweety</h3>
+                <p>Parakeet | 7 months | 0,7kg</p>
+            </div>
+
+            <div class="pet-card">
+                <img src="picture/bird-parakeet-white.jpg" alt="Dog">
+                <h3>Rio</h3>
+                <p>Parakeet | 2 years | 1,5kg</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact">
         <h2>Contact Us</h2>
-        <p>Email: happypaws@gmail.com</p>
+        <div class="contact-grid">
+        <div class="contact-item">
+            <h3>📍 Location</h3>
+            <p>Osijek-Baranja County<br>Školska 123, Osijek<br>Croatia 31000</p>
+        </div>
+        <div class="contact-item">
+            <h3>📧 Email</h3>
+            <p>info@happypaws.hr<br>adopt@happypaws.hr</p>
+        </div>
+        <div class="contact-item">
+            <h3>📞 Phone</h3>
+            <p>+385 31 555 123<br>Mon-Sat 10-18h</p>
+        </div>
+    </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Happy Paws Shelter</p>
     </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+    <script src="auth-navbar.js"></script>
 
     <script>
         const navbar = document.querySelector('.navbar');
