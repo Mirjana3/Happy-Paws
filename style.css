@@ -553,6 +553,13 @@ footer {
         font-size: 12px;
     }
 
+    .charts-container {
+        grid-template-columns: 1fr; /* 1 po redu na mobu */
+    }
+
+    .charts-container canvas {
+        height: 50vh !important;
+    }
 }
 
 
@@ -819,5 +826,14 @@ footer {
     .auth-panel {
         padding: 40px 30px;
     }
+    
+    .charts-container {
+        grid-template-columns: 1fr; /* 1 po redu na mobu */
+    }
+
+    .charts-container canvas {
+        height: 50vh !important;
+    }
 }
+
 
