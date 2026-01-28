@@ -40,6 +40,23 @@
         </ol>
     </section>
 
+    <!-- Statistics Section -->
+    <section id="statistics">
+        <h2>Adoption Statistics</h2>
+
+        <div class="stats-overview">
+            <p>Total Pets: <span id="total">0</span></p>
+            <p>Adopted: <span id="adopted">0</span></p>
+            <p>Not Adopted: <span id="notAdopted">0</span></p>
+        </div>
+
+        <div class="charts-container">
+            <canvas id="petTypeChart"></canvas>
+            <canvas id="sizeChart"></canvas>
+            <canvas id="vaccinatedChart"></canvas>
+            <canvas id="healthChart"></canvas>
+        </div>
+    </section>
 
     <!-- Contact Section -->
     <section id="contact">
@@ -113,5 +130,8 @@
             });
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="code.js"></script>
 </body>
 </html>
