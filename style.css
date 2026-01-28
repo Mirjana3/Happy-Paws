@@ -773,13 +773,16 @@ footer {
 /* CHART GRID */
 .charts-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 po redu */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
+    justify-items: center;
 }
 
 .charts-container canvas {
+    width: 100% !important;
+    max-width: 500px;
     background: white;
     padding: 20px;
     border-radius: 20px;
@@ -809,6 +812,7 @@ footer {
         padding: 40px 30px;
     }
 }
+
 
 
 
