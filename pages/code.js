@@ -101,3 +101,7 @@ async function fetchStatistics() {
         console.error("Error fetching statistics:", error);
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetchStatistics();
+});
