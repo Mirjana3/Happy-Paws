@@ -11,6 +11,7 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
+    padding-top: 70px;
 }
 
 /* Navbar */
@@ -808,6 +809,7 @@ footer {
         padding: 40px 30px;
     }
 }
+
 
 
 
