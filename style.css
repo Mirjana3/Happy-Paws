@@ -776,7 +776,7 @@ footer {
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
     gap: 0px;
-    max-width: 100px;
+    max-width: 200px;
     margin: 0 auto;
     justify-items: center;
 }
@@ -813,6 +813,7 @@ footer {
         padding: 40px 30px;
     }
 }
+
 
 
 
