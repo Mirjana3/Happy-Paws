@@ -775,8 +775,8 @@ footer {
 .charts-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
-    gap: 0px;
-    max-width: 100px;
+    gap: 40px;
+    max-width: 1600px;
     margin: 0 auto;
     justify-items: center;
 }
@@ -813,15 +813,3 @@ footer {
         padding: 40px 30px;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
