@@ -101,10 +101,3 @@ async function fetchStatistics() {
         console.error("Error fetching statistics:", error);
     }
 }
-
-// ==========================
-// LOGOUT
-// ==========================
-function logout() {
-    firebase.auth().signOut();
-}
