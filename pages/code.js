@@ -20,19 +20,6 @@ const demoData = {
 };
 
 // ==========================
-// FIREBASE AUTH
-// ==========================
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        document.getElementById('mypage').style.display = 'block';
-        document.getElementById('user-welcome').innerText = `Welcome, ${user.email}`;
-        fetchStatistics();
-    } else {
-        document.getElementById('mypage').style.display = 'none';
-    }
-});
-
-// ==========================
 // CHART FUNKCIJA
 // ==========================
 function createBarChart(ctxId, labels, values, title) {
