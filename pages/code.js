@@ -44,12 +44,21 @@ function createBarChart(ctxId, labels, values, title) {
                 title: {
                     display: true,
                     text: title,
-                    font: { size: 20, weight: '600' }
+                    font: { size: 20, weight: '700' }
                 }
             },
             scales: {
-                y: { beginAtZero: true },
-                x: {}
+                y: { 
+                  beginAtZero: true,
+                  ticks: {
+                      font: { size: 18}
+                  }
+                },
+                x: {
+                  ticks: {
+                        font: { size: 18 } 
+                    }
+                }
             }
         }
     });
