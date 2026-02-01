@@ -91,76 +91,81 @@ document.addEventListener("DOMContentLoaded", () => {
     const resultDiv = document.getElementById("predictionResult");
 
     form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
 
-    const payload = {
-        Inputs: {
-            input1: [
-                {
-                    PetType: data.PetType,
-                    AgeMonths: parseFloat(data.AgeMonths),
-                    Size: data.Size,
-                    Vaccinated: parseInt(data.Vaccinated),
-                    HealthCondition: parseInt(data.HealthCondition),
-                    TimeInShelterDays: parseInt(data.TimeInShelterDays),
-                    AdoptionFee: parseFloat(data.AdoptionFee),
-                    PreviousOwner: parseInt(data.PreviousOwner)
-                }
-            ]
-        }
-    };
+        const payload = {
+            Inputs: {
+                input1: [
+                    {
+                        PetType: data.PetType,
+                        AgeMonths: parseFloat(data.AgeMonths),
+                        Size: data.Size,
+                        Vaccinated: parseInt(data.Vaccinated),
+                        HealthCondition: parseInt(data.HealthCondition),
+                        TimeInShelterDays: parseInt(data.TimeInShelterDays),
+                        AdoptionFee: parseFloat(data.AdoptionFee),
+                        PreviousOwner: parseInt(data.PreviousOwner)
+                    }
+                ]
+            }
+        };
 
-    console.log("Payload koji šaljemo:", payload);
+        console.log("Payload koji šaljemo:", payload);
 
-    try {
-        const response = await fetch("http://localhost:3000/predict", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        });
+        try {
+            const response = await fetch("http://localhost:3000/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
 
-        if (!response.ok) {
-            const text = await response.text();
-            console.error("Response not OK:", response.status, text);
-            resultDiv.innerHTML = `
+            if (!response.ok) {
+                const text = await response.text();
+                console.error("Response not OK:", response.status, text);
+                resultDiv.innerHTML = `
                 <p style="color:red">Greška od servera: ${response.status}</p>
                 <p>Detalji: ${text}</p>
             `;
-            return;
-        }
+                return;
+            }
 
-        let result;
-        try {
-            result = await response.json();
-        } catch (jsonErr) {
-            console.error("Ne može se parsirati JSON:", jsonErr);
-            resultDiv.innerHTML = `
+            let result;
+            try {
+                result = await response.json();
+            } catch (jsonErr) {
+                console.error("Ne može se parsirati JSON:", jsonErr);
+                resultDiv.innerHTML = `
                 <p style="color:red">Greška: neispravan JSON od servera</p>
                 <p>${jsonErr}</p>
             `;
-            return;
-        }
+                return;
+            }
 
-        if (result.probability === undefined) {
-            console.warn("Rezultat ne sadrži 'probability':", result);
+            // Dobivanje rezultata iz servera
+            const predictionData = result.Results.WebServiceOutput0[0];
+
+            const adoptedText = predictionData.PetAdoptionPrediction === 1
+                ? "Ovaj ljubimac se vrlo vjerojatno može udomiti."
+                : "Ovaj ljubimac možda neće biti odmah udomljen.";
+
+            const probabilityText = `Vjerojatnost udomljavanja: ${(predictionData.AdoptionProbability * 100).toFixed(2)}%`;
+
+            // Prikaz rezultata u divu
             resultDiv.innerHTML = `
-                <p style="color:red">Server je vratio neočekivan rezultat</p>
-                <pre>${JSON.stringify(result, null, 2)}</pre>
-            `;
-            return;
-        }
+    <p style="color:green; font-weight:bold;">${adoptedText}</p>
+    <p>${probabilityText}</p>
+`;
 
-        resultDiv.innerHTML = `Vjerojatnost udomljavanja: ${(result.probability * 100).toFixed(2)}%`;
 
-    } catch (err) {
-        console.error("Fetch ili drugi problem:", err);
-        resultDiv.innerHTML = `
+        } catch (err) {
+            console.error("Fetch ili drugi problem:", err);
+            resultDiv.innerHTML = `
             <p style="color:red">TypeError: problem s mrežom ili URL-om</p>
             <p>${err.message}</p>
         `;
-    }
-});
+        }
+    });
 });
