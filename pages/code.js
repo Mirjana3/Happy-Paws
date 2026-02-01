@@ -93,37 +93,87 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault(); // sprječava reload stranice
 
-        // Uzimamo podatke iz forme
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
 
-        // Pretvorimo stringove u brojeve tamo gdje treba
-        data.AgeMonths = parseInt(data.AgeMonths);
-        data.TimeInShelterDays = parseInt(data.TimeInShelterDays);
-        data.AdoptionFee = parseFloat(data.AdoptionFee);
-        data.Vaccinated = parseInt(data.Vaccinated);
-        data.HealthCondition = parseInt(data.HealthCondition);
-        data.PreviousOwner = parseInt(data.PreviousOwner);
+        // Pripremimo JSON u formatu koji Azure očekuje
+        const payload = {
+            Inputs: {
+                input1: [
+                    {
+                        PetType: data.PetType,
+                        AgeMonths: parseFloat(data.AgeMonths),
+                        Size: data.Size,
+                        Vaccinated: parseInt(data.Vaccinated),
+                        HealthCondition: parseInt(data.HealthCondition),
+                        TimeInShelterDays: parseInt(data.TimeInShelterDays),
+                        AdoptionFee: parseFloat(data.AdoptionFee),
+                        PreviousOwner: parseInt(data.PreviousOwner)
+                    }
+                ]
+            }
+        };
+
+        console.log("Payload koji šaljemo:", payload);
 
         try {
-            // Šaljemo podatke na Azure endpoint
             const response = await fetch("http://c5ef19f9-ca84-4daa-9b5f-f3e37921dccd.polandcentral.azurecontainer.io/score", {
                 method: "POST",
-                headers: { "Content-Type": "application/json",
-                            "Authorization": "Bearer JFWBbhNYw2h5fNTFqdrX7b4DMdnOttWQ"
-                 },
-                body: JSON.stringify(data)
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer JFWBbhNYw2h5fNTFqdrX7b4DMdnOttWQ" // promijenjeno sa "Key" na "Bearer"
+                },
+                body: JSON.stringify(payload)
             });
 
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-            const result = await response.json();
+            if (!response.ok) {
+                const text = await response.text();
+                console.error("Response not OK:", response.status, text);
+                resultDiv.innerHTML = `
+                    <p style="color:red">Greška od servera: ${response.status}</p>
+                    <p>Detalji: ${text}</p>
+                `;
+                return;
+            }
 
-            // Prikaz rezultata u modal-u
+            let result;
+            try {
+                result = await response.json();
+            } catch (jsonErr) {
+                console.error("Ne može se parsirati JSON:", jsonErr);
+                resultDiv.innerHTML = `
+                    <p style="color:red">Greška: neispravan JSON od servera</p>
+                    <p>${jsonErr}</p>
+                `;
+                return;
+            }
+
+            if (result.probability === undefined) {
+                console.warn("Rezultat ne sadrži 'probability':", result);
+                resultDiv.innerHTML = `
+                    <p style="color:red">Server je vratio neočekivan rezultat</p>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+                return;
+            }
+
             resultDiv.innerHTML = `Vjerojatnost udomljavanja: ${(result.probability * 100).toFixed(2)}%`;
+
         } catch (err) {
-            console.error(err);
-            resultDiv.innerHTML = "Došlo je do pogreške pri predikciji.";
+            console.error("Fetch ili drugi problem:", err);
+
+            if (err instanceof TypeError) {
+                resultDiv.innerHTML = `
+                    <p style="color:red">TypeError: problem s mrežom ili URL-om</p>
+                    <p>${err.message}</p>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <p style="color:red">Nepoznata greška:</p>
+                    <pre>${err}</pre>
+                `;
+            }
         }
     });
 });
