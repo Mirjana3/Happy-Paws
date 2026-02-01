@@ -91,87 +91,76 @@ document.addEventListener("DOMContentLoaded", () => {
     const resultDiv = document.getElementById("predictionResult");
 
     form.addEventListener("submit", async (e) => {
-        e.preventDefault(); // sprječava reload stranice
+    e.preventDefault();
 
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
 
-        // Pripremimo JSON u formatu koji Azure očekuje
-        const payload = {
-            Inputs: {
-                input1: [
-                    {
-                        PetType: data.PetType,
-                        AgeMonths: parseFloat(data.AgeMonths),
-                        Size: data.Size,
-                        Vaccinated: parseInt(data.Vaccinated),
-                        HealthCondition: parseInt(data.HealthCondition),
-                        TimeInShelterDays: parseInt(data.TimeInShelterDays),
-                        AdoptionFee: parseFloat(data.AdoptionFee),
-                        PreviousOwner: parseInt(data.PreviousOwner)
-                    }
-                ]
-            }
-        };
-
-        console.log("Payload koji šaljemo:", payload);
-
-        try {
-            // Zamijeni tvoj stari fetch prema Azure-u s ovim:
-            const response = await fetch("http://localhost:3000/predict", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(payload)
-            });
-
-
-            if (!response.ok) {
-                const text = await response.text();
-                console.error("Response not OK:", response.status, text);
-                resultDiv.innerHTML = `
-                    <p style="color:red">Greška od servera: ${response.status}</p>
-                    <p>Detalji: ${text}</p>
-                `;
-                return;
-            }
-
-            let result;
-            try {
-                result = await response.json();
-            } catch (jsonErr) {
-                console.error("Ne može se parsirati JSON:", jsonErr);
-                resultDiv.innerHTML = `
-                    <p style="color:red">Greška: neispravan JSON od servera</p>
-                    <p>${jsonErr}</p>
-                `;
-                return;
-            }
-
-            if (result.probability === undefined) {
-                console.warn("Rezultat ne sadrži 'probability':", result);
-                resultDiv.innerHTML = `
-                    <p style="color:red">Server je vratio neočekivan rezultat</p>
-                    <pre>${JSON.stringify(result, null, 2)}</pre>
-                `;
-                return;
-            }
-
-            resultDiv.innerHTML = `Vjerojatnost udomljavanja: ${(result.probability * 100).toFixed(2)}%`;
-
-        } catch (err) {
-            console.error("Fetch ili drugi problem:", err);
-
-            if (err instanceof TypeError) {
-                resultDiv.innerHTML = `
-                    <p style="color:red">TypeError: problem s mrežom ili URL-om</p>
-                    <p>${err.message}</p>
-                `;
-            } else {
-                resultDiv.innerHTML = `
-                    <p style="color:red">Nepoznata greška:</p>
-                    <pre>${err}</pre>
-                `;
-            }
+    const payload = {
+        Inputs: {
+            input1: [
+                {
+                    PetType: data.PetType,
+                    AgeMonths: parseFloat(data.AgeMonths),
+                    Size: data.Size,
+                    Vaccinated: parseInt(data.Vaccinated),
+                    HealthCondition: parseInt(data.HealthCondition),
+                    TimeInShelterDays: parseInt(data.TimeInShelterDays),
+                    AdoptionFee: parseFloat(data.AdoptionFee),
+                    PreviousOwner: parseInt(data.PreviousOwner)
+                }
+            ]
         }
-    });
+    };
+
+    console.log("Payload koji šaljemo:", payload);
+
+    try {
+        const response = await fetch("http://localhost:3000/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const text = await response.text();
+            console.error("Response not OK:", response.status, text);
+            resultDiv.innerHTML = `
+                <p style="color:red">Greška od servera: ${response.status}</p>
+                <p>Detalji: ${text}</p>
+            `;
+            return;
+        }
+
+        let result;
+        try {
+            result = await response.json();
+        } catch (jsonErr) {
+            console.error("Ne može se parsirati JSON:", jsonErr);
+            resultDiv.innerHTML = `
+                <p style="color:red">Greška: neispravan JSON od servera</p>
+                <p>${jsonErr}</p>
+            `;
+            return;
+        }
+
+        if (result.probability === undefined) {
+            console.warn("Rezultat ne sadrži 'probability':", result);
+            resultDiv.innerHTML = `
+                <p style="color:red">Server je vratio neočekivan rezultat</p>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+            return;
+        }
+
+        resultDiv.innerHTML = `Vjerojatnost udomljavanja: ${(result.probability * 100).toFixed(2)}%`;
+
+    } catch (err) {
+        console.error("Fetch ili drugi problem:", err);
+        resultDiv.innerHTML = `
+            <p style="color:red">TypeError: problem s mrežom ili URL-om</p>
+            <p>${err.message}</p>
+        `;
+    }
+});
 });
