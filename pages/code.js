@@ -2,7 +2,7 @@
 // PROMJENA SAMO OVDJE
 // ==========================
 const USE_DEMO_DATA = false; // sada koristimo CSV fajl
-const csvFile = "pets.csv"; // CSV fajl u istom folderu
+const csvFile = "../pets.csv"; // CSV fajl u istom folderu
 
 // ==========================
 // DOHVAT STATISTIKE 
