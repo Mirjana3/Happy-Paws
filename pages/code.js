@@ -1,4 +1,4 @@
-const csvFile = "../pets.csv"; // relativno od pages/
+const csvFile = "pets.csv"; // relativno od pages/
 
 async function fetchStatistics() {
     try {
