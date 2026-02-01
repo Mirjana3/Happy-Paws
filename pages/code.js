@@ -85,3 +85,45 @@ function createBarChart(ctxId, labels, values, title) {
 }
 
 document.addEventListener("DOMContentLoaded", fetchStatistics);
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("predictForm");
+    const resultDiv = document.getElementById("predictionResult");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // sprječava reload stranice
+
+        // Uzimamo podatke iz forme
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // Pretvorimo stringove u brojeve tamo gdje treba
+        data.AgeMonths = parseInt(data.AgeMonths);
+        data.TimeInShelterDays = parseInt(data.TimeInShelterDays);
+        data.AdoptionFee = parseFloat(data.AdoptionFee);
+        data.Vaccinated = parseInt(data.Vaccinated);
+        data.HealthCondition = parseInt(data.HealthCondition);
+        data.PreviousOwner = parseInt(data.PreviousOwner);
+
+        try {
+            // Šaljemo podatke na Azure endpoint
+            const response = await fetch("http://c5ef19f9-ca84-4daa-9b5f-f3e37921dccd.polandcentral.azurecontainer.io/score", {
+                method: "POST",
+                headers: { "Content-Type": "application/json",
+                            "Authorization": "Bearer JFWBbhNYw2h5fNTFqdrX7b4DMdnOttWQ"
+                 },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+            const result = await response.json();
+
+            // Prikaz rezultata u modal-u
+            resultDiv.innerHTML = `Vjerojatnost udomljavanja: ${(result.probability * 100).toFixed(2)}%`;
+        } catch (err) {
+            console.error(err);
+            resultDiv.innerHTML = "Došlo je do pogreške pri predikciji.";
+        }
+    });
+});
