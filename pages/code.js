@@ -1,7 +1,7 @@
 // ==========================
 // PROMJENA SAMO OVDJE
 // ==========================
-const csvFile = "/pets.csv"; // CSV u rootu
+const csvFile = "../pets.csv"; // CSV u rootu
 
 // ==========================
 // DOHVAT STATISTIKE 
