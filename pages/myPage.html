@@ -28,7 +28,7 @@
         <div id="user-welcome"></div>
     </section>
 
-     <!-- Adopt Section -->
+    <!-- Adopt Section -->
     <section id="adopt">
         <h2>How To Adopt</h2>
         <ol>
@@ -42,6 +42,70 @@
     <!-- Statistics Section -->
     <section id="statistics">
         <h2>Adoption Statistics</h2>
+
+        <!-- Button za otvaranje modala -->
+        <div style="text-align:center; margin-bottom:30px;">
+            <button id="predictBtn" class="hero-btn">Predict Adoption</button>
+        </div>
+
+        <!-- Modal -->
+        <div id="predictModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 style="text-align:center; margin-bottom:20px;">Adoption Prediction</h2>
+
+                <form id="predictForm" style="display:flex; flex-direction:column; gap:15px;">
+                    <label>Pet Type:
+                        <select name="PetType" required>
+                            <option value="Dog">Dog</option>
+                            <option value="Cat">Cat</option>
+                            <option value="Rabbit">Rabbit</option>
+                            <option value="Bird">Bird</option>
+                        </select>
+                    </label>
+
+                    <label>Age Months: <input type="number" name="AgeMonths" step="1" min="0" required></label>
+
+                    <label>Size:
+                        <select name="Size" required>
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
+                        </select>
+                    </label>
+
+                    <label>Vaccinated:
+                        <select name="Vaccinated" required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </label>
+
+                    <label>Health Condition:
+                        <select name="HealthCondition" required>
+                            <option value="0">Healthy</option>
+                            <option value="1">Medical</option>
+                        </select>
+                    </label>
+
+                    <label>Time In Shelter Days: <input type="number" name="TimeInShelterDays" required></label>
+                    <label>Adoption Fee: <input type="number" name="AdoptionFee" required></label>
+
+                    <label>Previous Owner:
+                        <select name="PreviousOwner" required>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </label>
+
+                    <button type="submit" class="hero-btn" style="margin-top:10px;">Predict</button>
+                </form>
+
+                <div id="predictionResult" style="margin-top:15px; text-align:center;"></div>
+            </div>
+        </div>
+
+
 
         <div class="stats-overview">
             <p>Total Pets: <span id="total">0</span></p>
@@ -61,19 +125,19 @@
     <section id="contact">
         <h2>Contact Us</h2>
         <div class="contact-grid">
-        <div class="contact-item">
-            <h3>📍 Location</h3>
-            <p>Osijek-Baranja County<br>Školska 123, Osijek<br>Croatia 31000</p>
+            <div class="contact-item">
+                <h3>📍 Location</h3>
+                <p>Osijek-Baranja County<br>Školska 123, Osijek<br>Croatia 31000</p>
+            </div>
+            <div class="contact-item">
+                <h3>📧 Email</h3>
+                <p>info@happypaws.hr<br>adopt@happypaws.hr</p>
+            </div>
+            <div class="contact-item">
+                <h3>📞 Phone</h3>
+                <p>+385 31 555 123<br>Mon-Sat 10-18h</p>
+            </div>
         </div>
-        <div class="contact-item">
-            <h3>📧 Email</h3>
-            <p>info@happypaws.hr<br>adopt@happypaws.hr</p>
-        </div>
-        <div class="contact-item">
-            <h3>📞 Phone</h3>
-            <p>+385 31 555 123<br>Mon-Sat 10-18h</p>
-        </div>
-    </div>
     </section>
 
     <!-- Footer -->
@@ -90,7 +154,7 @@
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                navbar.style.backgroundColor = 'rgba(255,255,255,0.5)'; 
+                navbar.style.backgroundColor = 'rgba(255,255,255,0.5)';
                 navbar.style.opacity = '1';
             } else {
                 navbar.style.backgroundColor = 'rgba(255,255,255,0.9)';
@@ -116,7 +180,7 @@
             showSlide(currentSlide);
         }, 3000);
 
-       
+
         slides.forEach(slide => {
             slide.addEventListener('click', () => {
                 clearInterval(slideInterval);
@@ -128,10 +192,19 @@
                 }, 3000);
             });
         });
+
+        const modal = document.getElementById("predictModal");
+        const btn = document.getElementById("predictBtn");
+        const span = modal.querySelector(".close");
+
+        btn.onclick = () => modal.style.display = "flex";
+        span.onclick = () => modal.style.display = "none";
+        window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; }
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="code.js"></script>
 </body>
-</html>
 
+</html>
