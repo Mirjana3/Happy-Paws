@@ -124,8 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
                   body: JSON.stringify(payload)
             });
 
-            });
-
 
             if (!response.ok) {
                 const text = await response.text();
