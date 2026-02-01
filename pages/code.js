@@ -117,13 +117,13 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Payload koji šaljemo:", payload);
 
         try {
-            const response = await fetch("https://c5ef19f9-ca84-4daa-9b5f-f3e37921dccd.polandcentral.azurecontainer.io/score", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer JFWBbhNYw2h5fNTFqdrX7b4DMdnOttWQ" // promijenjeno sa "Key" na "Bearer"
-                },
-                body: JSON.stringify(payload)
+            // Zamijeni tvoj stari fetch prema Azure-u s ovim:
+            const response = await fetch("http://localhost:3000/predict", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(payload)
+            });
+
             });
 
 
