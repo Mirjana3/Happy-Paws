@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Payload koji šaljemo:", payload);
 
         try {
-            const response = await fetch("http://c5ef19f9-ca84-4daa-9b5f-f3e37921dccd.polandcentral.azurecontainer.io/score", {
+            const response = await fetch("https://c5ef19f9-ca84-4daa-9b5f-f3e37921dccd.polandcentral.azurecontainer.io/score", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
